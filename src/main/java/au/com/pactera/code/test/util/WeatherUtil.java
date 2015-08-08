@@ -6,6 +6,8 @@ package au.com.pactera.code.test.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,6 +18,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import au.com.pactera.code.test.dto.City;
 import au.com.pactera.code.test.dto.WeatherApp;
 import au.com.pactera.code.test.dto.WeatherInfo;
 
@@ -102,6 +105,16 @@ public class WeatherUtil {
 
 		return weatherInfo;
 
+	}
+	
+	public static List<City> convertToCityList(List<City> cities, Map<String,String> citiesMap){
+		for (Map.Entry<String, String> entry : citiesMap.entrySet()) {
+			City city = new City();
+			city.setCityId(entry.getKey());
+			city.setCityName(entry.getValue());
+			cities.add(city);
+		}
+		return cities;
 	}
 
 }
