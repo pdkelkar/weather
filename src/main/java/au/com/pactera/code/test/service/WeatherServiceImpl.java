@@ -35,6 +35,22 @@ public class WeatherServiceImpl implements WeatherService {
 
 	@Value("#{citiesMap}")
 	private Map<String, String> citiesMap;
+	
+	public String getURL() {
+		return URL;
+	}
+
+	public void setURL(String uRL) {
+		URL = uRL;
+	}
+
+	public Map<String, String> getCitiesMap() {
+		return citiesMap;
+	}
+
+	public void setCitiesMap(Map<String, String> citiesMap) {
+		this.citiesMap = citiesMap;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -57,32 +73,11 @@ public class WeatherServiceImpl implements WeatherService {
 		return weatherInfo;
 	}
 
-	public String getURL() {
-		return URL;
-	}
-
-	public void setURL(String uRL) {
-		URL = uRL;
-	}
-
-	public Map<String, String> getCitiesMap() {
-		return citiesMap;
-	}
-
-	public void setCitiesMap(Map<String, String> citiesMap) {
-		this.citiesMap = citiesMap;
-	}
-
 	@Override
 	public List<City> getCities() {
 		logger.info("getCities()- Entry");
 		List<City> cities = new ArrayList<>();
-		for (Map.Entry<String, String> entry : citiesMap.entrySet()) {
-			City city = new City();
-			city.setCityId(entry.getKey());
-			city.setCityName(entry.getValue());
-			cities.add(city);
-		}
+		WeatherUtil.convertToCityList(cities, citiesMap);
 		logger.info("getCities()- Exit");
 		return cities;
 	}
