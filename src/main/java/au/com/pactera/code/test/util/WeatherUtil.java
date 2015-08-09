@@ -1,6 +1,3 @@
-/**
- * 
- */
 package au.com.pactera.code.test.util;
 
 import java.io.BufferedReader;
@@ -25,25 +22,17 @@ import au.com.pactera.code.test.dto.WeatherInfo;
 
 /**
  * @author Priyadarshan
- * 
+ * A utility class called by WeatherServiceImpl
  */
 public class WeatherUtil {
 
-	/*
-	 * public static JSONObject extractJsonObject(String jsonObject) throws
-	 * JSONException {
+	/**
 	 * 
-	 * JSONObject json = new JSONObject(jsonObject); return json; }
-	 * 
-	 * public static String getStringValuefromJson(String
-	 * jsonAttribute,JSONObject json) throws JSONException{ return
-	 * (String)json.get(jsonAttribute); }
-	 * 
-	 * public static Double getDoubleValuefromJson(String
-	 * jsonAttribute,JSONObject json) throws JSONException{ return
-	 * (Double)json.get(jsonAttribute); }
+	 * @param parameter
+	 * @param URL
+	 * @return
+	 * @throws IOException
 	 */
-
 	public static String makeHTTPGetCall(String parameter, String URL)
 			throws IOException {
 
@@ -54,8 +43,9 @@ public class WeatherUtil {
 			HttpGet httpget = new HttpGet(URL + parameter);
 
 			try {
-
+				//Make HTTP Get call
 				response = httpclient.execute(httpget);
+				//convert entity response to string
 				result = convertEntityResponseToString(response);
 
 			} finally {
@@ -67,6 +57,12 @@ public class WeatherUtil {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param response
+	 * @return String representation of Entity Response
+	 * @throws IOException
+	 */
 	public static String convertEntityResponseToString(
 			CloseableHttpResponse response) throws IOException {
 		String line;
@@ -83,6 +79,12 @@ public class WeatherUtil {
 		return result.toString();
 	}
 
+	/**
+	 * 
+	 * @param weatherInfo
+	 * @param weatherApp
+	 * @return WeatherInfo object
+	 */
 	public static WeatherInfo convertToWeatherInfo(WeatherInfo weatherInfo,
 			WeatherApp weatherApp) {
 		// Cityname
@@ -111,6 +113,12 @@ public class WeatherUtil {
 
 	}
 
+	/**
+	 * 
+	 * @param cities
+	 * @param citiesMap
+	 * @return
+	 */
 	public static List<City> convertToCityList(List<City> cities,
 			Map<String, String> citiesMap) {
 		for (Map.Entry<String, String> entry : citiesMap.entrySet()) {
@@ -122,6 +130,11 @@ public class WeatherUtil {
 		return cities;
 	}
 	
+	/**
+	 * 
+	 * @param weatherInfo
+	 * @return
+	 */
 	public static WeatherInfo convertToOneDecimalPlace(WeatherInfo weatherInfo){
 		DecimalFormat oneDigit = new DecimalFormat("#,##0.0");//format to 1 decimal place
 		weatherInfo.setTemp(Double.valueOf(oneDigit.format(weatherInfo.getTemp())));

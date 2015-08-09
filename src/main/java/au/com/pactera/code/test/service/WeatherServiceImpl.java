@@ -24,7 +24,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * @author Priyadarshan
- * 
+ * This class is the service class which implements WeatherService and performs required business logic
  */
 
 @Service
@@ -54,24 +54,22 @@ public class WeatherServiceImpl implements WeatherService {
 		this.citiesMap = citiesMap;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * au.com.pactera.code.test.service.WeatherService#getWeather(java.lang.
-	 * String)
-	 */
 	@Override
 	public WeatherInfo getWeather(String cityId) throws IOException, CityIdNotFoundException {
 		logger.info("getWeather()- Entry");
 		String currentWeather = "";
 		WeatherApp weatherApp = new WeatherApp();
 		WeatherInfo weatherInfo = new WeatherInfo();
+		//call the WeatherAPI for weather information
 		currentWeather = WeatherUtil.makeHTTPGetCall(cityId, URL);
 		Gson gson = new GsonBuilder().create();
+		//Convert json to WeatherApp java object
 		weatherApp = gson.fromJson(currentWeather, WeatherApp.class);
+		//Convert WeatherApp to WeatherInfo
 		WeatherUtil.convertToWeatherInfo(weatherInfo, weatherApp);
+		//Validate city id passed by UI
 		ValidationUtil.checkCityId(weatherInfo);
+		//Round off temp, speed values to one decimal place
 		WeatherUtil.convertToOneDecimalPlace(weatherInfo);		
 		logger.info("getWeather()- Exit");
 		return weatherInfo;
@@ -81,6 +79,7 @@ public class WeatherServiceImpl implements WeatherService {
 	public List<City> getCities() {
 		logger.info("getCities()- Entry");
 		List<City> cities = new ArrayList<>();
+		//convert Map to List
 		WeatherUtil.convertToCityList(cities, citiesMap);
 		logger.info("getCities()- Exit");
 		return cities;

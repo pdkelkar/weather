@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import au.com.pactera.code.test.dto.City;
 import au.com.pactera.code.test.dto.WeatherInfo;
 import au.com.pactera.code.test.exception.CityIdNotFoundException;
-
+/**
+ * 
+ * @author Priyadarshan
+ *
+ */
 @Service
 public interface WeatherService {
 	

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package au.com.pactera.code.test.controller;
 
 import java.io.IOException;
@@ -25,6 +22,7 @@ import au.com.pactera.code.test.service.WeatherService;
 
 /**
  * @author Priyadarshan
+ * This is the main Controller class which serves as entry point for UI
  *
  */
 @Controller
@@ -38,7 +36,10 @@ public class WeatherController{
 	@Value("${error.cityId}")
 	private String cityIdError;
 
-	
+	/**
+	 * 
+	 * @return list of cities for UI drop down
+	 */
 	@RequestMapping(value = "/cities", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<City> getCities() {
@@ -47,6 +48,12 @@ public class WeatherController{
 
 	}
 
+	/**
+	 * 
+	 * @param cityId
+	 * @return
+	 * @throws CityIdNotFoundException
+	 */
 	@RequestMapping(value = "/today", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	@ResponseBody
 	public WeatherInfo getCityWeather(@RequestBody String cityId) throws CityIdNotFoundException {
@@ -61,7 +68,10 @@ public class WeatherController{
 		return currentWeather;
 	}
 	
-	  @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="${error.cityId}")  // 400
+	/**
+	 * Controller exception handler method for City Id error
+	 */
+	  @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="${error.cityId}")// HTTP 400 error
 	  @ExceptionHandler(CityIdNotFoundException.class)
 	  public void cityIdError() {
 	    logger.error(getCityIdError());
