@@ -7,6 +7,7 @@ app.controller('WeatherController',function($scope, $http){
     $scope.cities = [];
     $scope.weather = {};    
     var ready = false;
+    var err = false;
     
     $http({
             method: 'GET',
@@ -27,13 +28,17 @@ app.controller('WeatherController',function($scope, $http){
   		  ready=true;
         }, 
         function(response) { // optional
-                // failed
+           err=true;
         });//http post end    	
     };//getWeather end
     
     $scope.isReady = function(){
     	return ready;
     };//isReady end
+    
+    $scope.isError = function(){
+    	return err;
+    }
 });//app controller end
 
 

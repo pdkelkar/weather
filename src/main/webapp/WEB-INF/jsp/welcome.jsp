@@ -10,7 +10,9 @@
 <body ng-controller="WeatherController as weather">
 
 	<div class="container">
+	<div ng-show="!isError()">
 		<h4>Weather Information</h4>
+		
 		<div style="margin-top: 20px;">
 			Select city: <select ng-model="selectedCity"
 				ng-options="item.cityId as item.cityName for item in cities"
@@ -48,6 +50,13 @@
 				</tr>
 
 			</table>
+		</div>
+		</div>
+		<div ng-show="isError()">
+		
+			<div class="alert alert-danger col-sm-6" role="alert" style="margin-top: 50px;">
+			<p>Oops! Something went wrong. Please try again. </p>
+			</div>
 		</div>
 	</div>
 </body>
