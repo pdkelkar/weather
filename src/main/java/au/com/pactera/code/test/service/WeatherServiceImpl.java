@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import au.com.pactera.code.test.dto.City;
 import au.com.pactera.code.test.dto.WeatherApp;
 import au.com.pactera.code.test.dto.WeatherInfo;
+import au.com.pactera.code.test.exception.CityIdNotFoundException;
 import au.com.pactera.code.test.util.WeatherUtil;
+import au.com.pactera.code.test.validation.ValidationUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,7 +62,7 @@ public class WeatherServiceImpl implements WeatherService {
 	 * String)
 	 */
 	@Override
-	public WeatherInfo getWeather(String cityId) throws IOException {
+	public WeatherInfo getWeather(String cityId) throws IOException, CityIdNotFoundException {
 		logger.info("getWeather()- Entry");
 		String currentWeather = "";
 		WeatherApp weatherApp = new WeatherApp();
@@ -69,6 +71,8 @@ public class WeatherServiceImpl implements WeatherService {
 		Gson gson = new GsonBuilder().create();
 		weatherApp = gson.fromJson(currentWeather, WeatherApp.class);
 		WeatherUtil.convertToWeatherInfo(weatherInfo, weatherApp);
+		ValidationUtil.checkCityId(weatherInfo);
+		WeatherUtil.convertToOneDecimalPlace(weatherInfo);		
 		logger.info("getWeather()- Exit");
 		return weatherInfo;
 	}
