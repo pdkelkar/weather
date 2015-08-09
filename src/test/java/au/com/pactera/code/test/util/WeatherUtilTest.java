@@ -74,7 +74,7 @@ public class WeatherUtilTest {
 		assertNotNull(cityList);
 	}
 
-	@SuppressWarnings("deprecation")
+	
 	@Test
 	public void testConvertToOneDecimalPlace() {
 		WeatherInfo weatherInfo = new WeatherInfo();
