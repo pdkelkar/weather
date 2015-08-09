@@ -52,6 +52,8 @@
 		<entry key="2147714" value="Sydney" />
 		<entry key="2158177" value="Melbourne" />
 		<entry key="7839791" value="Wollongong" />
+		<!-- To check invalid cityId uncomment below line -->
+   <!-- <entry key="1234567" value="Hurstville" /> -->
 	</util:map>
 
 </beans>
