@@ -6,6 +6,7 @@ package au.com.pactera.code.test.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -91,23 +92,27 @@ public class WeatherUtil {
 		// Date
 		weatherInfo.setDt(StringUtils.isNotBlank(Long.toString(weatherApp
 				.getDt())) ? weatherApp.getDt() : 0L);
+
 		// Citytemp
-		weatherInfo.setTemp(StringUtils.isNotBlank(Double.toString(weatherApp
-				.getMain().getTemp())) ? weatherApp.getMain().getTemp() : 0.0D);
+		weatherInfo.setTemp(weatherApp.getMain() != null ? weatherApp.getMain()
+				.getTemp() : 0.0D);
+
 		// CityWindspeed
-		weatherInfo.setSpeed(StringUtils.isNotBlank(Double.toString(weatherApp
-				.getWind().getSpeed())) ? weatherApp.getWind().getSpeed()
-				: 0.0D);
+		weatherInfo.setSpeed(weatherApp.getWind() != null ? weatherApp
+				.getWind().getSpeed() : 0.0D);
+
 		// CityCurrentcond
-		weatherInfo.setCurrentCondition(StringUtils.isNotBlank(weatherApp
-				.getWeather().get(0).getMain()) ? weatherApp.getWeather()
-				.get(0).getMain() : "");
+		weatherInfo
+				.setCurrentCondition(weatherApp.getWeather() != null ? weatherApp
+						.getWeather().get(0).getMain()
+						: "");
 
 		return weatherInfo;
 
 	}
-	
-	public static List<City> convertToCityList(List<City> cities, Map<String,String> citiesMap){
+
+	public static List<City> convertToCityList(List<City> cities,
+			Map<String, String> citiesMap) {
 		for (Map.Entry<String, String> entry : citiesMap.entrySet()) {
 			City city = new City();
 			city.setCityId(entry.getKey());
@@ -115,6 +120,13 @@ public class WeatherUtil {
 			cities.add(city);
 		}
 		return cities;
+	}
+	
+	public static WeatherInfo convertToOneDecimalPlace(WeatherInfo weatherInfo){
+		DecimalFormat oneDigit = new DecimalFormat("#,##0.0");//format to 1 decimal place
+		weatherInfo.setTemp(Double.valueOf(oneDigit.format(weatherInfo.getTemp())));
+		weatherInfo.setSpeed(Double.valueOf(oneDigit.format(weatherInfo.getSpeed())));
+		return weatherInfo;
 	}
 
 }
