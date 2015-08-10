@@ -1,10 +1,11 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html ng-app="weatherBureau">
 <meta charset="utf-8" />
 <head>
-<script src="resources/js/angular.min.js"></script>
-<script src="resources/js/app.js"></script>
-<link href="resources/css/bootstrap.css" rel="stylesheet">
+<script src="<c:url value="/resources/js/angular.min.js" />"></script>
+<script src="<c:url value="/resources/js/app.js" />"></script>
+<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 <title>Weather cities demo</title>
 </head>
 <body ng-controller="WeatherController as weather">
